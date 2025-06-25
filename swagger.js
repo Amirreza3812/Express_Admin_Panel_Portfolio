@@ -10,13 +10,13 @@ const options = {
     },
     servers: [
       {
-        url: "http://localhost:5000", // آدرس سرور توسعه‌ای
+        url: "https://express-admin-panel-portfolio.onrender.com/", // آدرس سرور توسعه‌ای
       },
     ],
     components: {
       securitySchemes: {
         bearerAuth: {
-          type: "http",
+          type: "https",
           scheme: "bearer",
           bearerFormat: "JWT",
         },
@@ -26,7 +26,6 @@ const options = {
   },
   apis: ["./routes/*.js"], // مسیر به فایل‌های روت برای مستندسازی
 };
-
 
 const swaggerSpec = swaggerJSDoc(options);
 module.exports = swaggerSpec;
