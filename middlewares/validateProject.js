@@ -10,8 +10,8 @@ const projectValidationRules = [
   body("description")
     .notEmpty()
     .withMessage("توضیحات نباید خالی باشد")
-    .isLength({ min: 10 })
-    .withMessage("توضیحات باید حداقل ۱۰ کاراکتر باشد"),
+    .isLength({ min: 2 })
+    .withMessage("توضیحات باید حداقل 2 کاراکتر باشد"),
 
   body("imageUrl").optional().isURL().withMessage("آدرس عکس معتبر نیست"),
 ];
