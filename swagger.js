@@ -10,7 +10,7 @@ const options = {
     },
     servers: [
       {
-        url: "https://express-admin-panel-portfolio.onrender.com/", // آدرس سرور توسعه‌ای
+        url: process.env.BASE_URL, // آدرس سرور توسعه‌ای
       },
     ],
     components: {
