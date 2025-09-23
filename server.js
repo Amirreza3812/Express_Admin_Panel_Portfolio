@@ -2,7 +2,7 @@ require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
-const { connectDB, sequelize } = require("./config/db");
+const { connectDB, sequelize } = require("./src/config/db");
 const projectRoutes = require("./routes/publicRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const authRoutes = require("./routes/authRoutes");
