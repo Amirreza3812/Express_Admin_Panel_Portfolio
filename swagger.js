@@ -243,12 +243,22 @@ const options = {
       {
         name: "Admin - Reports",
         description: "Sales reports and analytics"
+      },
+      {
+        name: "Admin - Dashboard",
+        description: "Admin dashboard overview and statistics"
+      },
+      {
+        name: "Admin - Orders",
+        description: "Admin order management and tracking"
       }
     ]
   },
   apis: [
     "./src/routes/api/v1/*.js",
+    "./src/routes/admin/*.js",
     "./src/controllers/api/v1/**/*.js",
+    "./src/controllers/api/admin/*.js",
     "./routes/*.js" // Keep legacy routes for now
   ]
 };

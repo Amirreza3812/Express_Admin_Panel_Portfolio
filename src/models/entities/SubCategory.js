@@ -33,25 +33,13 @@ const SubCategory = sequelize.define("SubCategory", {
     defaultValue: 'active',
     allowNull: false
   },
-  sort_order: {
-    type: DataTypes.INTEGER,
-    defaultValue: 0,
-    comment: 'Display order within category'
-  },
-  slug: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    comment: 'URL friendly name'
-  }
 }, {
   timestamps: true,
   tableName: 'subcategories',
   indexes: [
     { fields: ['category_id'] },
     { fields: ['status'] },
-    { fields: ['sort_order'] },
-    { fields: ['slug'] },
-    { unique: true, fields: ['category_id', 'slug'] }
+    { unique: true, fields: ['category_id', 'name'] }
   ]
 });
 

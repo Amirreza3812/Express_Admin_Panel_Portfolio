@@ -5,7 +5,6 @@ const Category = sequelize.define("Category", {
   name: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true,
     validate: {
       len: [2, 50]
     }
@@ -23,25 +22,13 @@ const Category = sequelize.define("Category", {
     type: DataTypes.ENUM('active', 'inactive'),
     defaultValue: 'active',
     allowNull: false
-  },
-  sort_order: {
-    type: DataTypes.INTEGER,
-    defaultValue: 0,
-    comment: 'Display order in frontend'
-  },
-  slug: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
-    comment: 'URL friendly name'
   }
 }, {
   timestamps: true,
   tableName: 'categories',
   indexes: [
-    { fields: ['status'] },
-    { fields: ['sort_order'] },
-    { fields: ['slug'] }
+    { unique: true, fields: ['name'] },
+    { fields: ['status'] }
   ]
 });
 

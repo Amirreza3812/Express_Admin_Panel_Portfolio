@@ -104,16 +104,6 @@ const Product = sequelize.define("Product", {
     type: DataTypes.INTEGER,
     defaultValue: 0
   },
-  sort_order: {
-    type: DataTypes.INTEGER,
-    defaultValue: 0
-  },
-  slug: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
-    comment: 'URL friendly name'
-  }
 }, {
   timestamps: true,
   tableName: 'products',
@@ -121,10 +111,7 @@ const Product = sequelize.define("Product", {
     { fields: ['subcategory_id'] },
     { fields: ['status'] },
     { fields: ['is_featured'] },
-    { fields: ['price'] },
-    { fields: ['rating'] },
-    { fields: ['slug'] },
-    { fields: ['stock'] }
+    { unique: true, fields: ['name'] }
   ]
 });
 

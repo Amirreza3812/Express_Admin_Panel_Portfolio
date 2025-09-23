@@ -7,14 +7,15 @@ const globalErrorHandler = require("./src/middlewares/errorHandler");
 const AppError = require("./src/utils/AppError");
 
 // Import Routes
-const projectRoutes = require("./routes/publicRoutes");
-const adminRoutes = require("./routes/adminRoutes");
+// const projectRoutes = require("./routes/publicRoutes"); // Disabled for cafe management
+// const adminRoutes = require("./routes/adminRoutes"); // Disabled for cafe management
 const authRoutes = require("./routes/authRoutes");
 const adminsRoutes = require("./routes/adminsRoutes");
 
 // Import New API v1 Routes
 const publicApiRoutes = require("./src/routes/api/v1/public");
 const authApiRoutes = require("./src/routes/api/v1/auth");
+const adminApiRoutes = require("./src/routes/admin");
 
 const path = require("path");
 const app = express();
@@ -40,14 +41,15 @@ app.use((req, res, next) => {
 });
 
 // Legacy Routes (keeping for backward compatibility)
-app.use("/api/projects", projectRoutes);
-app.use("/api/admin/projects", adminRoutes);
+// app.use("/api/projects", projectRoutes); // Disabled for cafe management
+// app.use("/api/admin/projects", adminRoutes); // Disabled for cafe management
 app.use("/api/admins", adminsRoutes);
 app.use("/api/auth", authRoutes);
 
 // New API v1 Routes (Professional Structure)
 app.use("/api/v1/public", publicApiRoutes);
 app.use("/api/v1/auth", authApiRoutes);
+app.use("/api/v1/admin", adminApiRoutes);
 
 // 🔻 اینجا Swagger رو اضافه کن:
 const swaggerUi = require("swagger-ui-express");
@@ -77,11 +79,11 @@ app.use(globalErrorHandler);
 connectDB();
 
 sequelize
-  .sync({ alter: true })
-  .then(() => console.log("✅ Tables synced"))
+  .sync({ force: true })
+  .then(() => console.log("✅ Tables synced (recreated cleanly)"))
   .catch((err) => console.error("❌ Sync error:", err));
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });

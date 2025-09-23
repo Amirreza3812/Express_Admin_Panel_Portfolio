@@ -12,7 +12,6 @@ const User = sequelize.define("User", {
   email: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true,
     validate: {
       isEmail: true
     }
@@ -60,9 +59,8 @@ const User = sequelize.define("User", {
   timestamps: true,
   tableName: 'users',
   indexes: [
-    { fields: ['email'] },
-    { fields: ['role'] },
-    { fields: ['status'] }
+    { unique: true, fields: ['email'] },
+    { fields: ['role'] }
   ]
 });
 

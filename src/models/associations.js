@@ -88,7 +88,7 @@ Order.belongsTo(User, {
 // Order -> OrderItem (1:Many)
 Order.hasMany(OrderItem, {
   foreignKey: 'order_id',
-  as: 'items',
+  as: 'orderItems',
   onDelete: 'CASCADE'
 });
 OrderItem.belongsTo(Order, {

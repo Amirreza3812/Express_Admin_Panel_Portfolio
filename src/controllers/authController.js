@@ -1,30 +1,32 @@
-const Admin = require("../models/entities/Admin");
+const User = require("../models/entities/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 // ✅ ثبت‌نام ادمین
 const registerAdmin = async (req, res) => {
-  const { username, password } = req.body;
+  const { name, email, password } = req.body;
 
   try {
-    // بررسی تکراری نبودن نام کاربری
-    const existingAdmin = await Admin.findOne({ where: { username } });
+    // بررسی تکراری نبودن ایمیل
+    const existingAdmin = await User.findOne({ where: { email } });
     if (existingAdmin) {
-      return res.status(400).json({ message: "نام کاربری قبلاً ثبت شده است." });
+      return res.status(400).json({ message: "ایمیل قبلاً ثبت شده است." });
     }
 
     // هش کردن رمز عبور
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // ساخت ادمین جدید
-    const newAdmin = await Admin.create({
-      username,
+    const newAdmin = await User.create({
+      name,
+      email,
       password: hashedPassword,
+      role: 'admin'
     });
 
     res.status(201).json({
       message: "ادمین با موفقیت ثبت شد",
-      admin: { id: newAdmin.id, username: newAdmin.username },
+      admin: { id: newAdmin.id, name: newAdmin.name, email: newAdmin.email },
     });
   } catch (error) {
     console.error("Register Error:", error);
@@ -34,11 +36,13 @@ const registerAdmin = async (req, res) => {
 
 // ✅ ورود ادمین
 const loginAdmin = async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
   try {
-    // یافتن ادمین از روی نام کاربری
-    const admin = await Admin.findOne({ where: { username } });
+    // یافتن ادمین از روی ایمیل
+    const admin = await User.findOne({
+      where: { email, role: 'admin' }
+    });
     if (!admin) {
       return res.status(404).json({ message: "ادمین یافت نشد" });
     }
@@ -51,7 +55,7 @@ const loginAdmin = async (req, res) => {
 
     // تولید توکن
     const token = jwt.sign(
-      { id: admin.id, username: admin.username },
+      { id: admin.id, email: admin.email, role: admin.role },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
@@ -59,7 +63,7 @@ const loginAdmin = async (req, res) => {
     res.json({
       message: "ورود موفق",
       token,
-      admin: { id: admin.id, username: admin.username },
+      admin: { id: admin.id, name: admin.name, email: admin.email },
     });
   } catch (error) {
     console.error("Login Error:", error);
