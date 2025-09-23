@@ -6,12 +6,17 @@ const handleValidationErrors = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     const errorMessages = errors.array().map(error => ({
-      field: error.path,
+      field: error.path || error.param,
       message: error.msg,
-      value: error.value
+      value: error.value,
+      location: error.location
     }));
 
-    return next(new AppError('Validation failed', 400, errorMessages));
+    console.log('Validation errors:', errorMessages); // Debug log
+
+    const error = new AppError('Validation failed', 400);
+    error.errors = errorMessages;
+    return next(error);
   }
   next();
 };
@@ -36,8 +41,10 @@ const validateUserRegistration = [
 
   body('phone')
     .optional()
-    .isMobilePhone()
-    .withMessage('Please provide a valid phone number'),
+    .isLength({ min: 10, max: 15 })
+    .withMessage('Phone number must be between 10 and 15 characters')
+    .matches(/^[\+]?[\d\s\-\(\)]+$/)
+    .withMessage('Please provide a valid phone number format'),
 
   handleValidationErrors
 ];

@@ -4,27 +4,253 @@ const options = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "Portfolio API",
+      title: "Cafe Management API",
       version: "1.0.0",
-      description: "مستندات API پروژه پورتفولیو",
+      description: `
+        Professional Cafe Management System API
+
+        This API provides comprehensive functionality for managing a cafe including:
+        - Customer registration and authentication
+        - Product catalog with categories and subcategories
+        - Customer reviews and ratings
+        - Favorites/wishlist management
+        - Order management and sales tracking
+        - Admin panel for content management
+
+        **API Versioning**: All new endpoints use /api/v1/ prefix
+        **Authentication**: JWT tokens required for protected routes
+        **Response Format**: Standardized JSON responses with success/error status
+      `,
+      contact: {
+        name: "Getsu Team",
+        email: "support@getsu.com"
+      },
+      license: {
+        name: "MIT",
+        url: "https://opensource.org/licenses/MIT"
+      }
     },
     servers: [
       {
-        url: process.env.BASE_URL, // آدرس سرور توسعه‌ای
+        url: process.env.BASE_URL || "http://localhost:10000",
+        description: "Development server"
       },
+      {
+        url: "https://api.cafe-management.com",
+        description: "Production server"
+      }
     ],
     components: {
       securitySchemes: {
         bearerAuth: {
-          type: "https",
+          type: "http",
           scheme: "bearer",
           bearerFormat: "JWT",
-        },
+          description: "JWT token obtained from /api/v1/auth/login"
+        }
       },
+      schemas: {
+        // User Schemas
+        User: {
+          type: "object",
+          properties: {
+            id: { type: "integer", example: 1 },
+            name: { type: "string", example: "John Doe" },
+            email: { type: "string", format: "email", example: "john@example.com" },
+            phone: { type: "string", example: "+1234567890" },
+            role: { type: "string", enum: ["customer", "admin", "super_admin"], example: "customer" },
+            status: { type: "string", enum: ["active", "inactive", "banned"], example: "active" },
+            avatar: { type: "string", example: "https://example.com/avatar.jpg" },
+            createdAt: { type: "string", format: "date-time" },
+            updatedAt: { type: "string", format: "date-time" }
+          }
+        },
+
+        // Category Schemas
+        Category: {
+          type: "object",
+          properties: {
+            id: { type: "integer", example: 1 },
+            name: { type: "string", example: "Coffee" },
+            description: { type: "string", example: "Various coffee drinks and beverages" },
+            image: { type: "string", example: "https://example.com/coffee.jpg" },
+            slug: { type: "string", example: "coffee" },
+            status: { type: "string", enum: ["active", "inactive"], example: "active" },
+            sort_order: { type: "integer", example: 1 },
+            subcategories: {
+              type: "array",
+              items: { $ref: "#/components/schemas/SubCategory" }
+            }
+          }
+        },
+
+        SubCategory: {
+          type: "object",
+          properties: {
+            id: { type: "integer", example: 1 },
+            category_id: { type: "integer", example: 1 },
+            name: { type: "string", example: "Hot Coffee" },
+            description: { type: "string", example: "Hot coffee beverages" },
+            image: { type: "string", example: "https://example.com/hot-coffee.jpg" },
+            slug: { type: "string", example: "hot-coffee" },
+            status: { type: "string", enum: ["active", "inactive"], example: "active" },
+            sort_order: { type: "integer", example: 1 }
+          }
+        },
+
+        // Product Schemas
+        Product: {
+          type: "object",
+          properties: {
+            id: { type: "integer", example: 1 },
+            subcategory_id: { type: "integer", example: 1 },
+            name: { type: "string", example: "Espresso" },
+            description: { type: "string", example: "Strong, concentrated coffee shot" },
+            price: { type: "number", format: "decimal", example: 2.50 },
+            cost_price: { type: "number", format: "decimal", example: 0.75 },
+            image: { type: "string", example: "https://example.com/espresso.jpg" },
+            gallery: {
+              type: "array",
+              items: { type: "string" },
+              example: ["https://example.com/espresso1.jpg", "https://example.com/espresso2.jpg"]
+            },
+            stock: { type: "integer", example: 50 },
+            status: { type: "string", enum: ["active", "inactive", "out_of_stock"], example: "active" },
+            is_featured: { type: "boolean", example: true },
+            preparation_time: { type: "integer", example: 3, description: "Time in minutes" },
+            ingredients: { type: "string", example: "Coffee beans, Water" },
+            calories: { type: "integer", example: 5 },
+            allergens: {
+              type: "array",
+              items: { type: "string" },
+              example: ["caffeine"]
+            },
+            sizes: {
+              type: "object",
+              example: { "small": 2.50, "medium": 3.00, "large": 3.50 }
+            },
+            rating: { type: "number", format: "decimal", example: 4.5 },
+            total_reviews: { type: "integer", example: 127 },
+            slug: { type: "string", example: "espresso" }
+          }
+        },
+
+        // Comment Schema
+        Comment: {
+          type: "object",
+          properties: {
+            id: { type: "integer", example: 1 },
+            user_id: { type: "integer", example: 1 },
+            product_id: { type: "integer", example: 1 },
+            comment: { type: "string", example: "Amazing coffee! Perfect for morning energy boost." },
+            rating: { type: "integer", minimum: 1, maximum: 5, example: 5 },
+            status: { type: "string", enum: ["pending", "approved", "rejected"], example: "approved" },
+            admin_reply: { type: "string", example: "Thank you for your feedback!" },
+            helpful_count: { type: "integer", example: 12 },
+            createdAt: { type: "string", format: "date-time" },
+            user: { $ref: "#/components/schemas/User" }
+          }
+        },
+
+        // Request/Response Schemas
+        ApiResponse: {
+          type: "object",
+          properties: {
+            success: { type: "boolean", example: true },
+            status: { type: "string", example: "success" },
+            message: { type: "string", example: "Operation completed successfully" },
+            data: { type: "object" },
+            timestamp: { type: "string", format: "date-time" }
+          }
+        },
+
+        PaginatedResponse: {
+          allOf: [
+            { $ref: "#/components/schemas/ApiResponse" },
+            {
+              type: "object",
+              properties: {
+                pagination: {
+                  type: "object",
+                  properties: {
+                    page: { type: "integer", example: 1 },
+                    limit: { type: "integer", example: 12 },
+                    total: { type: "integer", example: 156 },
+                    totalPages: { type: "integer", example: 13 },
+                    hasNextPage: { type: "boolean", example: true },
+                    hasPrevPage: { type: "boolean", example: false }
+                  }
+                }
+              }
+            }
+          ]
+        },
+
+        ErrorResponse: {
+          type: "object",
+          properties: {
+            success: { type: "boolean", example: false },
+            status: { type: "string", example: "error" },
+            message: { type: "string", example: "An error occurred" },
+            errors: {
+              type: "array",
+              items: {
+                type: "object",
+                properties: {
+                  field: { type: "string" },
+                  message: { type: "string" }
+                }
+              }
+            },
+            timestamp: { type: "string", format: "date-time" }
+          }
+        }
+      }
     },
-    security: [{ bearerAuth: [] }],
+    tags: [
+      {
+        name: "Authentication",
+        description: "User registration, login, and profile management"
+      },
+      {
+        name: "Categories",
+        description: "Browse product categories and subcategories"
+      },
+      {
+        name: "Products",
+        description: "Browse products, search, and filtering"
+      },
+      {
+        name: "Comments & Reviews",
+        description: "Customer reviews and ratings"
+      },
+      {
+        name: "Favorites",
+        description: "Customer wishlist management"
+      },
+      {
+        name: "Admin - Categories",
+        description: "Admin category management"
+      },
+      {
+        name: "Admin - Products",
+        description: "Admin product management"
+      },
+      {
+        name: "Admin - Users",
+        description: "Admin user management"
+      },
+      {
+        name: "Admin - Reports",
+        description: "Sales reports and analytics"
+      }
+    ]
   },
-  apis: ["./routes/*.js"], // مسیر به فایل‌های روت برای مستندسازی
+  apis: [
+    "./src/routes/api/v1/*.js",
+    "./src/controllers/api/v1/**/*.js",
+    "./routes/*.js" // Keep legacy routes for now
+  ]
 };
 
 const swaggerSpec = swaggerJSDoc(options);

@@ -49,6 +49,12 @@ const User = sequelize.define("User", {
   email_verified_at: {
     type: DataTypes.DATE,
     allowNull: true
+  },
+  token_version: {
+    type: DataTypes.INTEGER,
+    defaultValue: 1,
+    allowNull: false,
+    comment: 'Incremented on password change to invalidate old tokens'
   }
 }, {
   timestamps: true,

@@ -29,6 +29,11 @@ const protect = catchAsync(async (req, res, next) => {
     return next(new AppError('Your account has been deactivated. Please contact support.', 401));
   }
 
+  // 5) Check if token version is still valid (token invalidation)
+  if (decoded.tokenVersion !== currentUser.token_version) {
+    return next(new AppError('Your session has been invalidated. Please log in again.', 401));
+  }
+
   // Grant access to protected route
   req.user = currentUser;
   next();
@@ -54,8 +59,12 @@ const optionalAuth = catchAsync(async (req, res, next) => {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       const currentUser = await User.findByPk(decoded.id);
 
-      if (currentUser && currentUser.status === 'active') {
+      if (currentUser &&
+          currentUser.status === 'active' &&
+          decoded.tokenVersion === currentUser.token_version) {
         req.user = currentUser;
+      } else {
+        req.user = null;
       }
     } catch (error) {
       // Token invalid, but that's okay for optional auth

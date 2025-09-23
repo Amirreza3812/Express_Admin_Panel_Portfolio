@@ -24,22 +24,36 @@ const handleJWTExpiredError = () => new AppError('Your token has expired! Please
 
 // Send Error in Development
 const sendErrorDev = (err, res) => {
-  res.status(err.statusCode).json({
+  const response = {
     status: err.status,
     error: err,
     message: err.message,
     stack: err.stack
-  });
+  };
+
+  // Include validation errors if they exist
+  if (err.errors) {
+    response.errors = err.errors;
+  }
+
+  res.status(err.statusCode).json(response);
 };
 
 // Send Error in Production
 const sendErrorProd = (err, res) => {
   // Operational, trusted error: send message to client
   if (err.isOperational) {
-    res.status(err.statusCode).json({
+    const response = {
       status: err.status,
       message: err.message
-    });
+    };
+
+    // Include validation errors if they exist
+    if (err.errors) {
+      response.errors = err.errors;
+    }
+
+    res.status(err.statusCode).json(response);
   } else {
     // Programming or other unknown error: don't leak error details
     console.error('ERROR 💥', err);

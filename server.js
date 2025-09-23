@@ -12,6 +12,10 @@ const adminRoutes = require("./routes/adminRoutes");
 const authRoutes = require("./routes/authRoutes");
 const adminsRoutes = require("./routes/adminsRoutes");
 
+// Import New API v1 Routes
+const publicApiRoutes = require("./src/routes/api/v1/public");
+const authApiRoutes = require("./src/routes/api/v1/auth");
+
 const path = require("path");
 const app = express();
 
@@ -35,11 +39,15 @@ app.use((req, res, next) => {
   next();
 });
 
-// Routes
+// Legacy Routes (keeping for backward compatibility)
 app.use("/api/projects", projectRoutes);
 app.use("/api/admin/projects", adminRoutes);
 app.use("/api/admins", adminsRoutes);
 app.use("/api/auth", authRoutes);
+
+// New API v1 Routes (Professional Structure)
+app.use("/api/v1/public", publicApiRoutes);
+app.use("/api/v1/auth", authApiRoutes);
 
 // 🔻 اینجا Swagger رو اضافه کن:
 const swaggerUi = require("swagger-ui-express");
