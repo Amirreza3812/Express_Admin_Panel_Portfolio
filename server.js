@@ -3,17 +3,37 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const { connectDB, sequelize } = require("./src/config/db");
+const globalErrorHandler = require("./src/middlewares/errorHandler");
+const AppError = require("./src/utils/AppError");
+
+// Import Routes
 const projectRoutes = require("./routes/publicRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const authRoutes = require("./routes/authRoutes");
 const adminsRoutes = require("./routes/adminsRoutes");
+
 const path = require("path");
 const app = express();
 
-// Middlewares
+// Global Middlewares
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+// Security Headers
+app.use((req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  next();
+});
+
+// Request Logging
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
+  next();
+});
 
 // Routes
 app.use("/api/projects", projectRoutes);
@@ -27,10 +47,23 @@ const swaggerSpec = require("./swagger");
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-// تست ساده
+// Health Check
 app.get("/", (req, res) => {
-  res.send("API is running...");
+  res.json({
+    status: "success",
+    message: "🚀 Cafe Management API is running!",
+    version: "1.0.0",
+    timestamp: new Date().toISOString()
+  });
 });
+
+// Handle undefined routes
+app.all('*', (req, res, next) => {
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+});
+
+// Global Error Handling Middleware
+app.use(globalErrorHandler);
 
 // اتصال به دیتابیس
 connectDB();
