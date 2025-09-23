@@ -3,8 +3,8 @@ const router = express.Router();
 const {
   getAllProjects,
   deleteAllProjects,
-} = require("../controllers/projectController");
-const authenticate = require("../middlewares/authMiddleware");
+} = require("../src/controllers/projectController");
+const authenticate = require("../src/middlewares/authMiddleware");
 
 // GET /api/projects → نمایش همه پروژه‌ها
 router.get("/", getAllProjects);

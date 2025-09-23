@@ -5,14 +5,14 @@ const {
   getProjectById,
   updateProject,
   deleteProject,
-} = require("../controllers/adminController");
+} = require("../src/controllers/adminController");
 
 const {
   projectValidationRules,
   validateProject,
-} = require("../middlewares/validateProject");
-const authenticate = require("../middlewares/authMiddleware");
-const upload = require("../middlewares/upload");
+} = require("../src/middlewares/validateProject");
+const authenticate = require("../src/middlewares/authMiddleware");
+const upload = require("../src/middlewares/upload");
 
 router.post(
   "/",

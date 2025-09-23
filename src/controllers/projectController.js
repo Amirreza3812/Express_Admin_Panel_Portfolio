@@ -1,4 +1,4 @@
-const Project = require("../models/Project");
+const Project = require("../models/entities/Project");
 
 // گرفتن همه پروژه‌ها
 const getAllProjects = async (req, res) => {

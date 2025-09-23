@@ -4,9 +4,9 @@ const {
   getAllAdmins,
   deleteAdmin,
   changeAdminPassword,
-} = require("../controllers/adminController");
+} = require("../src/controllers/adminController");
 
-const authenticate = require("../middlewares/authMiddleware");
+const authenticate = require("../src/middlewares/authMiddleware");
 
 // گرفتن همه ادمین‌ها
 router.get("/", authenticate, getAllAdmins);

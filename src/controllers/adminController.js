@@ -1,6 +1,6 @@
 // فایل: controllers/adminController.js
-const Project = require("../models/Project");
-const Admin = require("../models/Admin");
+const Project = require("../models/entities/Project");
+const Admin = require("../models/entities/Admin");
 const bcrypt = require("bcrypt");
 
 // 👉 ساخت پروژه جدید
