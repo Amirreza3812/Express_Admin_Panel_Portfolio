@@ -17,6 +17,11 @@ const connectDB = async () => {
   try {
     await sequelize.authenticate();
     console.log("✅ MySQL connected.");
+
+    // Load model associations
+    require('../models/associations');
+    console.log("✅ Model associations loaded.");
+
   } catch (error) {
     console.error("❌ Connection failed:", error);
   }
