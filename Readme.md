@@ -1,3 +1,5 @@
+ # GETSU TEAM 
+
 # ☕ Cafe Management System API
 
 <div align="center">
@@ -8,8 +10,9 @@
 ![Sequelize](https://img.shields.io/badge/Sequelize-6.x-purple.svg)
 ![JWT](https://img.shields.io/badge/JWT-Authentication-red.svg)
 ![Swagger](https://img.shields.io/badge/Swagger-API%20Docs-lightgreen.svg)
-  <h1> <b> GETSU TEAM </b></h1>
+ 
 **A comprehensive RESTful API for managing cafe operations with professional admin panel**
+<br/>
 
 [Features](#-features) • [Installation](#-installation) • [API Documentation](#-api-documentation) • [Usage](#-usage) • [Contributing](#-contributing)
 
