@@ -23,31 +23,27 @@ const options = {
       `,
       contact: {
         name: "Getsu Team",
-        email: "support@getsu.com"
+        email: "support@getsu.com",
       },
       license: {
         name: "MIT",
-        url: "https://opensource.org/licenses/MIT"
-      }
+        url: "https://opensource.org/licenses/MIT",
+      },
     },
     servers: [
       {
-        url: process.env.BASE_URL || "http://localhost:3001",
-        description: "Development server"
+        url: process.env.BASE_URL,
+        description: "Development server",
       },
-      {
-        url: "https://api.cafe-management.com",
-        description: "Production server"
-      }
     ],
     components: {
       securitySchemes: {
         bearerAuth: {
-          type: "http",
+          type: "https",
           scheme: "bearer",
           bearerFormat: "JWT",
-          description: "JWT token obtained from /api/v1/auth/login"
-        }
+          description: "JWT token obtained from /api/v1/auth/login",
+        },
       },
       schemas: {
         // User Schemas
@@ -56,14 +52,29 @@ const options = {
           properties: {
             id: { type: "integer", example: 1 },
             name: { type: "string", example: "John Doe" },
-            email: { type: "string", format: "email", example: "john@example.com" },
+            email: {
+              type: "string",
+              format: "email",
+              example: "john@example.com",
+            },
             phone: { type: "string", example: "+1234567890" },
-            role: { type: "string", enum: ["customer", "admin", "super_admin"], example: "customer" },
-            status: { type: "string", enum: ["active", "inactive", "banned"], example: "active" },
-            avatar: { type: "string", example: "https://example.com/avatar.jpg" },
+            role: {
+              type: "string",
+              enum: ["customer", "admin", "super_admin"],
+              example: "customer",
+            },
+            status: {
+              type: "string",
+              enum: ["active", "inactive", "banned"],
+              example: "active",
+            },
+            avatar: {
+              type: "string",
+              example: "https://example.com/avatar.jpg",
+            },
             createdAt: { type: "string", format: "date-time" },
-            updatedAt: { type: "string", format: "date-time" }
-          }
+            updatedAt: { type: "string", format: "date-time" },
+          },
         },
 
         // Category Schemas
@@ -72,16 +83,26 @@ const options = {
           properties: {
             id: { type: "integer", example: 1 },
             name: { type: "string", example: "Coffee" },
-            description: { type: "string", example: "Various coffee drinks and beverages" },
-            image: { type: "string", example: "https://example.com/coffee.jpg" },
+            description: {
+              type: "string",
+              example: "Various coffee drinks and beverages",
+            },
+            image: {
+              type: "string",
+              example: "https://example.com/coffee.jpg",
+            },
             slug: { type: "string", example: "coffee" },
-            status: { type: "string", enum: ["active", "inactive"], example: "active" },
+            status: {
+              type: "string",
+              enum: ["active", "inactive"],
+              example: "active",
+            },
             sort_order: { type: "integer", example: 1 },
             subcategories: {
               type: "array",
-              items: { $ref: "#/components/schemas/SubCategory" }
-            }
-          }
+              items: { $ref: "#/components/schemas/SubCategory" },
+            },
+          },
         },
 
         SubCategory: {
@@ -91,11 +112,18 @@ const options = {
             category_id: { type: "integer", example: 1 },
             name: { type: "string", example: "Hot Coffee" },
             description: { type: "string", example: "Hot coffee beverages" },
-            image: { type: "string", example: "https://example.com/hot-coffee.jpg" },
+            image: {
+              type: "string",
+              example: "https://example.com/hot-coffee.jpg",
+            },
             slug: { type: "string", example: "hot-coffee" },
-            status: { type: "string", enum: ["active", "inactive"], example: "active" },
-            sort_order: { type: "integer", example: 1 }
-          }
+            status: {
+              type: "string",
+              enum: ["active", "inactive"],
+              example: "active",
+            },
+            sort_order: { type: "integer", example: 1 },
+          },
         },
 
         // Product Schemas
@@ -105,34 +133,51 @@ const options = {
             id: { type: "integer", example: 1 },
             subcategory_id: { type: "integer", example: 1 },
             name: { type: "string", example: "Espresso" },
-            description: { type: "string", example: "Strong, concentrated coffee shot" },
-            price: { type: "number", format: "decimal", example: 2.50 },
+            description: {
+              type: "string",
+              example: "Strong, concentrated coffee shot",
+            },
+            price: { type: "number", format: "decimal", example: 2.5 },
             cost_price: { type: "number", format: "decimal", example: 0.75 },
-            image: { type: "string", example: "https://example.com/espresso.jpg" },
+            image: {
+              type: "string",
+              example: "https://example.com/espresso.jpg",
+            },
             gallery: {
               type: "array",
               items: { type: "string" },
-              example: ["https://example.com/espresso1.jpg", "https://example.com/espresso2.jpg"]
+              example: [
+                "https://example.com/espresso1.jpg",
+                "https://example.com/espresso2.jpg",
+              ],
             },
             stock: { type: "integer", example: 50 },
-            status: { type: "string", enum: ["active", "inactive", "out_of_stock"], example: "active" },
+            status: {
+              type: "string",
+              enum: ["active", "inactive", "out_of_stock"],
+              example: "active",
+            },
             is_featured: { type: "boolean", example: true },
-            preparation_time: { type: "integer", example: 3, description: "Time in minutes" },
+            preparation_time: {
+              type: "integer",
+              example: 3,
+              description: "Time in minutes",
+            },
             ingredients: { type: "string", example: "Coffee beans, Water" },
             calories: { type: "integer", example: 5 },
             allergens: {
               type: "array",
               items: { type: "string" },
-              example: ["caffeine"]
+              example: ["caffeine"],
             },
             sizes: {
               type: "object",
-              example: { "small": 2.50, "medium": 3.00, "large": 3.50 }
+              example: { small: 2.5, medium: 3.0, large: 3.5 },
             },
             rating: { type: "number", format: "decimal", example: 4.5 },
             total_reviews: { type: "integer", example: 127 },
-            slug: { type: "string", example: "espresso" }
-          }
+            slug: { type: "string", example: "espresso" },
+          },
         },
 
         // Comment Schema
@@ -142,14 +187,24 @@ const options = {
             id: { type: "integer", example: 1 },
             user_id: { type: "integer", example: 1 },
             product_id: { type: "integer", example: 1 },
-            comment: { type: "string", example: "Amazing coffee! Perfect for morning energy boost." },
+            comment: {
+              type: "string",
+              example: "Amazing coffee! Perfect for morning energy boost.",
+            },
             rating: { type: "integer", minimum: 1, maximum: 5, example: 5 },
-            status: { type: "string", enum: ["pending", "approved", "rejected"], example: "approved" },
-            admin_reply: { type: "string", example: "Thank you for your feedback!" },
+            status: {
+              type: "string",
+              enum: ["pending", "approved", "rejected"],
+              example: "approved",
+            },
+            admin_reply: {
+              type: "string",
+              example: "Thank you for your feedback!",
+            },
             helpful_count: { type: "integer", example: 12 },
             createdAt: { type: "string", format: "date-time" },
-            user: { $ref: "#/components/schemas/User" }
-          }
+            user: { $ref: "#/components/schemas/User" },
+          },
         },
 
         // Request/Response Schemas
@@ -158,10 +213,13 @@ const options = {
           properties: {
             success: { type: "boolean", example: true },
             status: { type: "string", example: "success" },
-            message: { type: "string", example: "Operation completed successfully" },
+            message: {
+              type: "string",
+              example: "Operation completed successfully",
+            },
             data: { type: "object" },
-            timestamp: { type: "string", format: "date-time" }
-          }
+            timestamp: { type: "string", format: "date-time" },
+          },
         },
 
         PaginatedResponse: {
@@ -178,12 +236,12 @@ const options = {
                     total: { type: "integer", example: 156 },
                     totalPages: { type: "integer", example: 13 },
                     hasNextPage: { type: "boolean", example: true },
-                    hasPrevPage: { type: "boolean", example: false }
-                  }
-                }
-              }
-            }
-          ]
+                    hasPrevPage: { type: "boolean", example: false },
+                  },
+                },
+              },
+            },
+          ],
         },
 
         ErrorResponse: {
@@ -198,69 +256,69 @@ const options = {
                 type: "object",
                 properties: {
                   field: { type: "string" },
-                  message: { type: "string" }
-                }
-              }
+                  message: { type: "string" },
+                },
+              },
             },
-            timestamp: { type: "string", format: "date-time" }
-          }
-        }
-      }
+            timestamp: { type: "string", format: "date-time" },
+          },
+        },
+      },
     },
     tags: [
       {
         name: "Authentication",
-        description: "User registration, login, and profile management"
+        description: "User registration, login, and profile management",
       },
       {
         name: "Categories",
-        description: "Browse product categories and subcategories"
+        description: "Browse product categories and subcategories",
       },
       {
         name: "Products",
-        description: "Browse products, search, and filtering"
+        description: "Browse products, search, and filtering",
       },
       {
         name: "Comments & Reviews",
-        description: "Customer reviews and ratings"
+        description: "Customer reviews and ratings",
       },
       {
         name: "Favorites",
-        description: "Customer wishlist management"
+        description: "Customer wishlist management",
       },
       {
         name: "Admin - Categories",
-        description: "Admin category management"
+        description: "Admin category management",
       },
       {
         name: "Admin - Products",
-        description: "Admin product management"
+        description: "Admin product management",
       },
       {
         name: "Admin - Users",
-        description: "Admin user management"
+        description: "Admin user management",
       },
       {
         name: "Admin - Reports",
-        description: "Sales reports and analytics"
+        description: "Sales reports and analytics",
       },
       {
         name: "Admin - Dashboard",
-        description: "Admin dashboard overview and statistics"
+        description: "Admin dashboard overview and statistics",
       },
       {
         name: "Admin - Orders",
-        description: "Admin order management and tracking"
-      }
-    ]
+        description: "Admin order management and tracking",
+      },
+    ],
   },
   apis: [
     "./src/routes/api/v1/*.js",
     "./src/routes/admin/*.js",
     "./src/controllers/api/v1/**/*.js",
     "./src/controllers/api/admin/*.js",
-    "./routes/*.js" // Keep legacy routes for now
-  ]
+    "./routes/*.js", // Keep legacy routes for now
+  ],
 };
 
 const swaggerSpec = swaggerJSDoc(options);
