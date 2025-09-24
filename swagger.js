@@ -317,7 +317,7 @@ const options = {
     "./src/routes/admin/*.js",
     "./src/controllers/api/v1/**/*.js",
     "./src/controllers/api/admin/*.js",
-    "./routes/*.js", // Keep legacy routes for now
+    //"./routes/*.js", // Keep legacy routes for now
   ],
 };
 
