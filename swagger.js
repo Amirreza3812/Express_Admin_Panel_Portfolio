@@ -263,7 +263,7 @@ const options = {
             timestamp: { type: "string", format: "date-time" },
           },
         },
-      },
+      }, // what
     },
     tags: [
       {
