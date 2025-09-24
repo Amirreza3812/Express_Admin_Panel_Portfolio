@@ -1,4 +1,4 @@
- # GETSU TEAM 
+# GETSU TEAM
 
 # ☕ Cafe Management System API
 
@@ -10,7 +10,7 @@
 ![Sequelize](https://img.shields.io/badge/Sequelize-6.x-purple.svg)
 ![JWT](https://img.shields.io/badge/JWT-Authentication-red.svg)
 ![Swagger](https://img.shields.io/badge/Swagger-API%20Docs-lightgreen.svg)
- 
+
 **A comprehensive RESTful API for managing cafe operations with professional admin panel**
 <br/>
 
@@ -52,12 +52,14 @@ The **Cafe Management System API** is a robust, scalable RESTful API built with 
 ## ✨ Features
 
 ### 🛍️ **Customer Management**
+
 - User registration and authentication
 - Customer profiles and preferences
 - Favorites/wishlist system
 - Order history tracking
 
 ### 📦 **Product Management**
+
 - Hierarchical category system (Categories → Subcategories → Products)
 - Product variants with pricing
 - Inventory tracking and stock alerts
@@ -65,18 +67,21 @@ The **Cafe Management System API** is a robust, scalable RESTful API built with 
 - Image upload support
 
 ### 📋 **Order Management**
+
 - Real-time order processing
 - Order status tracking (Pending → Preparing → Ready → Delivered)
 - Order history and analytics
 - Customer notifications
 
 ### 👨‍💼 **Admin Panel**
+
 - Complete CRUD operations for all entities
 - Role-based access control (Customer/Admin)
 - Real-time dashboard with key metrics
 - User management and moderation
 
 ### 📈 **Business Intelligence**
+
 - Monthly sales reports
 - Top-selling products analytics
 - Customer behavior insights
@@ -84,6 +89,7 @@ The **Cafe Management System API** is a robust, scalable RESTful API built with 
 - Order status distribution
 
 ### 🔧 **Developer Experience**
+
 - Interactive Swagger API documentation
 - Comprehensive error handling
 - Request/response validation
@@ -93,25 +99,30 @@ The **Cafe Management System API** is a robust, scalable RESTful API built with 
 ## 🛠️ Technology Stack
 
 ### Backend Framework
+
 - **Node.js** - Runtime environment
 - **Express.js** - Web application framework
 - **Sequelize ORM** - Database object-relational mapping
 
 ### Database
+
 - **MySQL** - Primary database
 - **Database Migrations** - Schema version control
 
 ### Authentication & Security
+
 - **JWT (JSON Web Tokens)** - Stateless authentication
 - **bcrypt** - Password hashing
 - **express-validator** - Input validation
 - **CORS** - Cross-origin resource sharing
 
 ### Documentation & Testing
+
 - **Swagger/OpenAPI 3.0** - API documentation
 - **Jest** - Testing framework (ready for implementation)
 
 ### Development Tools
+
 - **Nodemon** - Development server
 - **ESLint** - Code linting
 - **Prettier** - Code formatting
@@ -121,6 +132,7 @@ The **Cafe Management System API** is a robust, scalable RESTful API built with 
 ### Prerequisites
 
 Ensure you have the following installed:
+
 - **Node.js** (v18.x or higher)
 - **MySQL** (v8.x or higher)
 - **npm** or **yarn**
@@ -128,11 +140,23 @@ Ensure you have the following installed:
 ### Step 1: Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/cafe-management-api.git
-cd cafe-management-api
+git clone https://github.com/Amirreza3812/Express_Admin_Panel_Portfolio.git
+cd Express_Admin_Panel_Portfolio
 ```
 
-### Step 2: Install Dependencies
+### Step 2: switch branch
+
+```bash
+git checkout CFM_Develop
+```
+
+### To make sure. you are on right branch
+
+```bash
+git branch
+```
+
+### Step 3: Install Dependencies
 
 ```bash
 npm install
@@ -189,16 +213,16 @@ The server will start at `http://localhost:3001`
 
 ### Environment Variables
 
-| Variable | Description | Default | Required |
-|----------|-------------|---------|----------|
-| `DB_HOST` | MySQL host | localhost | ✅ |
-| `DB_PORT` | MySQL port | 3306 | ✅ |
-| `DB_NAME` | Database name | cafe_management | ✅ |
-| `DB_USER` | Database username | - | ✅ |
-| `DB_PASSWORD` | Database password | - | ✅ |
-| `PORT` | Server port | 3001 | ❌ |
-| `JWT_SECRET` | JWT signing secret | - | ✅ |
-| `NODE_ENV` | Environment mode | development | ❌ |
+| Variable      | Description        | Default         | Required |
+| ------------- | ------------------ | --------------- | -------- |
+| `DB_HOST`     | MySQL host         | localhost       | ✅       |
+| `DB_PORT`     | MySQL port         | 3306            | ✅       |
+| `DB_NAME`     | Database name      | cafe_management | ✅       |
+| `DB_USER`     | Database username  | -               | ✅       |
+| `DB_PASSWORD` | Database password  | -               | ✅       |
+| `PORT`        | Server port        | 3001            | ❌       |
+| `JWT_SECRET`  | JWT signing secret | -               | ✅       |
+| `NODE_ENV`    | Environment mode   | development     | ❌       |
 
 ## 📚 API Documentation
 
@@ -218,6 +242,7 @@ Base URL: http://localhost:3001/api/v1
 ### Main Endpoints
 
 #### 🔓 **Public Endpoints**
+
 ```
 GET    /api/v1/public/categories          # Get all categories
 GET    /api/v1/public/products            # Get all products
@@ -227,6 +252,7 @@ POST   /api/v1/auth/login                 # User login
 ```
 
 #### 🔐 **Protected Customer Endpoints**
+
 ```
 GET    /api/v1/customer/profile           # Get user profile
 PUT    /api/v1/customer/profile           # Update profile
@@ -237,6 +263,7 @@ GET    /api/v1/customer/orders            # Get order history
 ```
 
 #### 👨‍💼 **Admin Endpoints**
+
 ```
 GET    /api/v1/admin/dashboard/overview   # Dashboard statistics
 GET    /api/v1/admin/products             # Manage products
@@ -349,30 +376,30 @@ Content-Type: multipart/form-data
 
 ```javascript
 // Create an order
-POST /api/v1/customer/orders
-Authorization: Bearer <jwt_token>
-
-{
-  "items": [
-    {
-      "product_id": 1,
-      "quantity": 2
-    },
-    {
-      "product_id": 3,
-      "quantity": 1
-    }
-  ],
-  "order_type": "dine_in"
-}
+POST / api / v1 / customer / orders;
+Authorization: Bearer <
+  jwt_token >
+  {
+    items: [
+      {
+        product_id: 1,
+        quantity: 2,
+      },
+      {
+        product_id: 3,
+        quantity: 1,
+      },
+    ],
+    order_type: "dine_in",
+  };
 
 // Update order status (Admin only)
-PATCH /api/v1/admin/orders/123/status
-Authorization: Bearer <admin_jwt_token>
-
-{
-  "status": "preparing"
-}
+PATCH / api / v1 / admin / orders / 123 / status;
+Authorization: Bearer <
+  admin_jwt_token >
+  {
+    status: "preparing",
+  };
 ```
 
 ### Sales Reports
@@ -450,10 +477,10 @@ The API uses JSON Web Tokens for stateless authentication:
 
 ### Authorization Levels
 
-| Role | Permissions |
-|------|------------|
-| **Customer** | View products, manage profile, place orders, add favorites |
-| **Admin** | Full system access, user management, reports, product management |
+| Role         | Permissions                                                      |
+| ------------ | ---------------------------------------------------------------- |
+| **Customer** | View products, manage profile, place orders, add favorites       |
+| **Admin**    | Full system access, user management, reports, product management |
 
 ### Protected Routes
 
@@ -486,16 +513,16 @@ All errors follow a consistent format:
 
 ### HTTP Status Codes
 
-| Code | Meaning |
-|------|---------|
-| `200` | Success |
-| `201` | Created |
-| `400` | Bad Request - Validation Error |
+| Code  | Meaning                                |
+| ----- | -------------------------------------- |
+| `200` | Success                                |
+| `201` | Created                                |
+| `400` | Bad Request - Validation Error         |
 | `401` | Unauthorized - Authentication Required |
-| `403` | Forbidden - Insufficient Permissions |
-| `404` | Not Found |
-| `409` | Conflict - Duplicate Resource |
-| `500` | Internal Server Error |
+| `403` | Forbidden - Insufficient Permissions   |
+| `404` | Not Found                              |
+| `409` | Conflict - Duplicate Resource          |
+| `500` | Internal Server Error                  |
 
 ## 🤝 Contributing
 
@@ -548,7 +575,5 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 <div align="center">
 
 **Built with ❤️ for the coffee community**
-
-
 
 </div>
