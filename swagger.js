@@ -32,7 +32,7 @@ const options = {
     },
     servers: [
       {
-        url: process.env.BASE_URL || "http://localhost:10000",
+        url: process.env.BASE_URL || "http://localhost:3001",
         description: "Development server"
       },
       {
