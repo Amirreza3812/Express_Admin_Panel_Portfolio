@@ -117,8 +117,8 @@ const validateProduct = [
 const validateComment = [
   body('comment')
     .trim()
-    .isLength({ min: 5, max: 1000 })
-    .withMessage('Comment must be between 5 and 1000 characters'),
+    .isLength({ min: 10, max: 1000 })
+    .withMessage('Comment must be between 10 and 1000 characters'),
 
   body('rating')
     .isInt({ min: 1, max: 5 })

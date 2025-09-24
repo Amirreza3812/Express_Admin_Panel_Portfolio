@@ -146,118 +146,11 @@ const deleteCategory = catchAsync(async (req, res) => {
   });
 });
 
-// Create subcategory
-const createSubCategory = catchAsync(async (req, res) => {
-  const { category_id, name, description } = req.body;
-
-  // Check if category exists
-  const category = await Category.findByPk(category_id);
-  if (!category) {
-    return res.status(400).json({
-      success: false,
-      message: 'Invalid category ID'
-    });
-  }
-
-  // Handle image upload
-  let image = null;
-  if (req.file) {
-    image = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
-  }
-
-  const subcategory = await SubCategory.create({
-    category_id,
-    name,
-    description,
-    image,
-    status: 'active'
-  });
-
-  const newSubCategory = await SubCategory.findByPk(subcategory.id, {
-    include: [{ model: Category, as: 'category' }]
-  });
-
-  res.status(201).json({
-    success: true,
-    message: 'Subcategory created successfully',
-    data: newSubCategory
-  });
-});
-
-// Update subcategory
-const updateSubCategory = catchAsync(async (req, res) => {
-  const subcategory = await SubCategory.findByPk(req.params.id);
-
-  if (!subcategory) {
-    return res.status(404).json({
-      success: false,
-      message: 'Subcategory not found'
-    });
-  }
-
-  const { category_id, name, description, status } = req.body;
-
-  // Handle image upload
-  let image = subcategory.image;
-  if (req.file) {
-    image = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
-  }
-
-  await subcategory.update({
-    category_id: category_id || subcategory.category_id,
-    name: name || subcategory.name,
-    description: description || subcategory.description,
-    image,
-    status: status || subcategory.status
-  });
-
-  const updatedSubCategory = await SubCategory.findByPk(subcategory.id, {
-    include: [{ model: Category, as: 'category' }]
-  });
-
-  res.json({
-    success: true,
-    message: 'Subcategory updated successfully',
-    data: updatedSubCategory
-  });
-});
-
-// Delete subcategory
-const deleteSubCategory = catchAsync(async (req, res) => {
-  const subcategory = await SubCategory.findByPk(req.params.id, {
-    include: [{ model: Product, as: 'products' }]
-  });
-
-  if (!subcategory) {
-    return res.status(404).json({
-      success: false,
-      message: 'Subcategory not found'
-    });
-  }
-
-  // Check if subcategory has products
-  if (subcategory.products && subcategory.products.length > 0) {
-    return res.status(400).json({
-      success: false,
-      message: 'Cannot delete subcategory with existing products'
-    });
-  }
-
-  await subcategory.destroy();
-
-  res.json({
-    success: true,
-    message: 'Subcategory deleted successfully'
-  });
-});
 
 module.exports = {
   getAllCategories,
   getCategory,
   createCategory,
   updateCategory,
-  deleteCategory,
-  createSubCategory,
-  updateSubCategory,
-  deleteSubCategory
+  deleteCategory
 };

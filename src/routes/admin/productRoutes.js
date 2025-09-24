@@ -142,6 +142,42 @@ router.get('/',
   getAllProducts
 );
 
+/**
+ * @swagger
+ * /api/v1/admin/products/{id}:
+ *   get:
+ *     summary: Get single product (Admin)
+ *     tags: [Admin - Products]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Product ID
+ *         example: 1
+ *     responses:
+ *       200:
+ *         description: Product retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   $ref: '#/components/schemas/Product'
+ *       404:
+ *         description: Product not found
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden - Admin role required
+ */
 router.get('/:id',
   ...adminWithAudit('VIEW_PRODUCT'),
   getProduct
@@ -191,6 +227,53 @@ router.post('/',
   createProduct
 );
 
+/**
+ * @swagger
+ * /api/v1/admin/products/{id}:
+ *   put:
+ *     summary: Update a product (Admin)
+ *     tags: [Admin - Products]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Product ID
+ *         example: 1
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             $ref: '#/components/schemas/ProductRequest'
+ *     responses:
+ *       200:
+ *         description: Product updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: "Product updated successfully"
+ *                 data:
+ *                   $ref: '#/components/schemas/Product'
+ *       404:
+ *         description: Product not found
+ *       400:
+ *         description: Validation error
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden - Admin role required
+ */
 router.put('/:id',
   ...adminWithAudit('UPDATE_PRODUCT'),
   upload.single('image'),
@@ -198,11 +281,91 @@ router.put('/:id',
   updateProduct
 );
 
+/**
+ * @swagger
+ * /api/v1/admin/products/{id}:
+ *   delete:
+ *     summary: Delete a product (Admin)
+ *     tags: [Admin - Products]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Product ID
+ *         example: 1
+ *     responses:
+ *       200:
+ *         description: Product deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: "Product deleted successfully"
+ *       404:
+ *         description: Product not found
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden - Admin role required
+ */
 router.delete('/:id',
   ...adminWithAudit('DELETE_PRODUCT'),
   deleteProduct
 );
 
+/**
+ * @swagger
+ * /api/v1/admin/products/{id}/status:
+ *   patch:
+ *     summary: Toggle product status (Admin)
+ *     tags: [Admin - Products]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Product ID
+ *         example: 1
+ *     responses:
+ *       200:
+ *         description: Product status toggled successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: "Product activated successfully"
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     status:
+ *                       type: string
+ *                       example: "active"
+ *       404:
+ *         description: Product not found
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden - Admin role required
+ */
 router.patch('/:id/status',
   ...adminWithAudit('TOGGLE_PRODUCT_STATUS'),
   toggleProductStatus

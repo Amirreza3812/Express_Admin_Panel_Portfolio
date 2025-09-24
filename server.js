@@ -15,6 +15,8 @@ const adminsRoutes = require("./routes/adminsRoutes");
 // Import New API v1 Routes
 const publicApiRoutes = require("./src/routes/api/v1/public");
 const authApiRoutes = require("./src/routes/api/v1/auth");
+const commentsApiRoutes = require("./src/routes/api/v1/comments");
+const favoritesApiRoutes = require("./src/routes/api/v1/favorites");
 const adminApiRoutes = require("./src/routes/admin");
 
 const path = require("path");
@@ -49,6 +51,8 @@ app.use("/api/auth", authRoutes);
 // New API v1 Routes (Professional Structure)
 app.use("/api/v1/public", publicApiRoutes);
 app.use("/api/v1/auth", authApiRoutes);
+app.use("/api/v1/comments", commentsApiRoutes);
+app.use("/api/v1/favorites", favoritesApiRoutes);
 app.use("/api/v1/admin", adminApiRoutes);
 
 // 🔻 اینجا Swagger رو اضافه کن:
