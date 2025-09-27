@@ -8,6 +8,7 @@ const categoryRoutes = require('./categoryRoutes');
 const subcategoryRoutes = require('./subcategoryRoutes');
 const orderRoutes = require('./orderRoutes');
 const userRoutes = require('./userRoutes');
+const priceRoutes = require('./priceRoutes');
 const dashboardRoutes = require('./dashboardRoutes');
 const reportsRoutes = require('./reportsRoutes');
 
@@ -18,6 +19,7 @@ router.use('/categories', categoryRoutes);
 router.use('/subcategories', subcategoryRoutes);
 router.use('/orders', orderRoutes);
 router.use('/users', userRoutes);
+router.use('/prices', priceRoutes);
 router.use('/dashboard', dashboardRoutes);
 router.use('/reports', reportsRoutes);
 
