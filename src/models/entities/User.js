@@ -54,6 +54,16 @@ const User = sequelize.define("User", {
     defaultValue: 1,
     allowNull: false,
     comment: 'Incremented on password change to invalidate old tokens'
+  },
+  passwordResetToken: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    comment: 'Hashed password reset token'
+  },
+  passwordResetExpires: {
+    type: DataTypes.DATE,
+    allowNull: true,
+    comment: 'Password reset token expiration time'
   }
 }, {
   timestamps: true,
