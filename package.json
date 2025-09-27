@@ -8,14 +8,28 @@
     "test": "jest",
     "lint": "eslint .",
     "db:migrate": "npx sequelize-cli db:migrate",
-    "db:seed": "npx sequelize-cli db:seed:all"
+    "db:seed": "npx sequelize-cli db:seed:all",
+    "setup": "node scripts/setup.js",
+    "db:reset": "node -e \"require('./src/utils/dbHelpers').resetDatabase()\"",
+    "db:stats": "node -e \"require('./src/utils/dbHelpers').getDatabaseStats().then(console.log)\"",
+    "create:admin": "node -e \"const {createSuperAdmin} = require('./src/utils/dbHelpers'); createSuperAdmin({name: process.argv[1], email: process.argv[2], password: process.argv[3]}).then(() => process.exit())\" --",
+    "test:endpoints": "node test-endpoints.js",
+    "test:frontend": "node test-frontend-ready.js"
   },
-  "keywords": ["cafe", "management", "api", "nodejs", "express", "restaurant"],
+  "keywords": [
+    "cafe",
+    "management",
+    "api",
+    "nodejs",
+    "express",
+    "restaurant"
+  ],
   "author": "Getsu Team",
   "license": "MIT",
   "type": "commonjs",
   "description": "Professional Cafe Management System API with customer and admin functionality",
   "dependencies": {
+    "axios": "^1.12.2",
     "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
