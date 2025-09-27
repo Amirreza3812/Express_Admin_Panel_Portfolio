@@ -10,16 +10,30 @@ const options = {
         Professional Cafe Management System API
 
         This API provides comprehensive functionality for managing a cafe including:
+
+        **Customer Features:**
         - Customer registration and authentication
         - Product catalog with categories and subcategories
         - Customer reviews and ratings
         - Favorites/wishlist management
-        - Order management and sales tracking
-        - Admin panel for content management
+        - Order placement and tracking
+
+        **Admin Features:**
+        - Complete admin authentication system with role-based access
+        - Advanced product, category, and subcategory management
+        - Comprehensive user and customer management
+        - Price management with bulk operations and percentage adjustments
+        - Detailed sales reporting (monthly, yearly, comparisons)
+        - Comment/review moderation system
+        - Customer analytics and segmentation
+        - Order management and tracking
+        - Favorites analytics and trending
 
         **API Versioning**: All new endpoints use /api/v1/ prefix
         **Authentication**: JWT tokens required for protected routes
         **Response Format**: Standardized JSON responses with success/error status
+        **Admin Access**: Admin routes require admin or super_admin role
+        **Audit Logging**: All admin actions are logged for security
       `,
       contact: {
         name: "Getsu Team",
