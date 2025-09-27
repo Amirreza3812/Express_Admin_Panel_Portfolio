@@ -280,6 +280,7 @@ const options = {
       }, // what
     },
     tags: [
+      // Customer-facing API tags
       {
         name: "Authentication",
         description: "User registration, login, and profile management",
@@ -300,29 +301,51 @@ const options = {
         name: "Favorites",
         description: "Customer wishlist management",
       },
+
+      // Admin API tags - Authentication & Core
+      {
+        name: "Admin Auth",
+        description: "Admin authentication, registration, and profile management",
+      },
+
+      // Admin API tags - Product Management
       {
         name: "Admin - Categories",
-        description: "Admin category management",
+        description: "Admin category management with full CRUD operations",
       },
       {
         name: "Admin - Products",
-        description: "Admin product management",
+        description: "Admin product management with inventory and status control",
       },
       {
-        name: "Admin - Users",
-        description: "Admin user management",
+        name: "Admin - Price Management",
+        description: "Bulk price updates, percentage adjustments, and pricing analytics",
       },
+
+      // Admin API tags - Customer & User Management
+      {
+        name: "Admin - Customer Management",
+        description: "Customer analytics, segmentation, and profile management",
+      },
+      {
+        name: "Admin - Comment Management",
+        description: "Comment moderation, approval, and management system",
+      },
+
+      // Admin API tags - Sales & Analytics
       {
         name: "Admin - Reports",
-        description: "Sales reports and analytics",
+        description: "Comprehensive sales reports, monthly/yearly analytics",
       },
       {
         name: "Admin - Dashboard",
-        description: "Admin dashboard overview and statistics",
+        description: "Admin dashboard overview and real-time statistics",
       },
+
+      // Admin API tags - Order Management
       {
         name: "Admin - Orders",
-        description: "Admin order management and tracking",
+        description: "Order management, tracking, and fulfillment",
       },
     ],
   },
