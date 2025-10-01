@@ -46,14 +46,14 @@ const options = {
     },
     servers: [
       {
-        url: process.env.BASE_URL,
+        // url: process.env.BASE_URL,
         description: "Development server",
       },
     ],
     components: {
       securitySchemes: {
         bearerAuth: {
-          type: "https",
+          type: "http",
           scheme: "bearer",
           bearerFormat: "JWT",
           description: "JWT token obtained from /api/v1/auth/login",
